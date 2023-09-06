@@ -1,18 +1,11 @@
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { DataTypes, Model } from 'sequelize'
+import { sequelize } from '../config/sequelize';
 
-export const sequelize = new Sequelize('weijie-mavericks', 'postgres', '1234', {
-    host: 'localhost',
-    dialect: 'postgres'
-})
-
-interface EmployeeInput {
-    id: number;
-    name: string;
-    salary: number;
-    department: string;
-}
-
-
+// interface EmployeeInput {
+//     name: string;
+//     salary: number;
+//     department: string;
+// }
 
 class Employee extends Model {
     id?: number;
@@ -36,7 +29,6 @@ Employee.init({
     modelName: 'Employee',
 });
 export default Employee;
-
 
 export type EmployeeModel = typeof Employee;
 

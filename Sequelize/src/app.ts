@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import employeeRoute from './routes'
-import { sequelize } from './models/employee.model';
+import { sequelize } from './config/sequelize';
 
 const app = express();
 app.use(express.json())
