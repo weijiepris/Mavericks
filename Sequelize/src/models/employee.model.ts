@@ -11,7 +11,7 @@ class Employee extends Model {
     id?: number;
     name!: string;
     salary!: number;
-    department!: string;
+    department!: 'HR' | 'PS';
 }
 
 Employee.init({

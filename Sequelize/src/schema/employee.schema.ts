@@ -9,8 +9,8 @@ export const EmployeeSchema = z.object({
         salary: z.number({
             required_error: "Salary is required",
         }),
-        department: z.string({
-            required_error: "Department is required",
+        department: z.enum(['HR', 'PS']).refine((value) => value !== undefined, {
+            message: 'Department is required',
         }),
     })
 });
