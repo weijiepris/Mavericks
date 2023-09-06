@@ -81,7 +81,7 @@ export async function deleteEmployeeByIdHandler(
 
         await deleteEmployeeById(id);
 
-        res.sendStatus(200);
+        res.sendStatus(204);
 
     } catch (e: any) {
         return res.status(500).send(e.message);
