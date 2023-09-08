@@ -1,9 +1,13 @@
 import express, { Request, Response } from 'express'
 import employeeRoute from './routes'
 import { sequelize } from './config/sequelize';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json())
+app.use(cors({
+    origin: 'http://lcaolhost:3000'
+}))
 // app.use(express.urlencoded({extended: true}))
 
 try {
