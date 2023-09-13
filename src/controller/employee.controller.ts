@@ -2,14 +2,51 @@ import { Request, Response } from 'express'
 import Employee from '../models/employee.model';
 import { createEmployee, getEmployees, getEmployeeById, updateEmployeeById, deleteEmployeeById } from '../service/employee.service';
 import _ from 'lodash';
+import Department, { DepartmentModel } from '../models/department.model';
+import JwtService from '../utils/JWTService';
+import User from '../models/user.model';
+
+require('dotenv').config();
+
+const jwtService = new JwtService();
 
 export async function getEmployeeHandler(
     req: Request,
     res: Response
 ) {
     try {
-        const employees: Employee[] = await getEmployees();
-        return res.status(200).send(employees);
+        const token = req.headers.authorization || '';
+        const decode: any = await jwtService.verifyAccessToken(token);
+
+        const user: any = await User.findOne({
+            where: { username: decode.username }
+        })
+
+        console.log("user", user)
+        const employees: any = await getEmployees();
+
+        const departments: Department[] = await Department.findAll();
+
+        const map = new Map<number, string>();
+
+        departments.forEach((department: Department) => {
+            map.set(department.id!, department.name!);
+        })
+
+        let empObj = employees.map((employee: Employee) => {
+            return {
+                ...employee.toJSON(),
+                department: map.get(employee.departmentId),
+            };
+        });
+
+
+        if (user.departmentId !== 3) {
+            console.log(user.departmentId)
+            empObj = empObj.filter((emp: any) => emp.departmentId === user.departmentId);
+        }
+
+        return res.status(200).send(empObj);
     } catch (e: any) {
         return res.status(500).send(e.message);
     }
@@ -23,7 +60,7 @@ export async function createEmployeeHandler(
         const employees: Employee = await createEmployee(employee);
         return res.status(200).send(employees);
     } catch (e: any) {
-        return res.status(500).send(e.message); 
+        return res.status(500).send(e.message);
     }
 }
 

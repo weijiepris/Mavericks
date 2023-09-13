@@ -1,7 +1,8 @@
 const app = require("./app.ts")
+require("dotenv").config();
 
-const port = 3000;
+const port = process.env.PORT_NUMBER;
 
 app.listen(port, () => {
-    console.log(`Application listening at port http://localhost:3000`);
+    console.log(`Application listening at port http://localhost:${port}`);
 })

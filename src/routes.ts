@@ -3,9 +3,10 @@ import { validateEmployeeModel, validateEmployeeIdModel } from './middleware/val
 import { EmployeeIdSchema, EmployeeSchema } from "./schema/employee.schema"
 import _ from 'lodash'
 import { createEmployeeHandler, getEmployeeHandler, getEmployeeByIdHandler, updateEmployeeByIdHandler, deleteEmployeeByIdHandler } from './controller/employee.controller';
+import verifyTokenHandler from './middleware/authenticate';
 const router = express.Router();
 
-router.get("/", getEmployeeHandler);
+router.get("/", verifyTokenHandler, getEmployeeHandler);
 
 router.post("/", validateEmployeeModel(EmployeeSchema), createEmployeeHandler);
 
