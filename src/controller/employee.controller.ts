@@ -3,7 +3,7 @@ import Employee from '../models/employee.model';
 import { createEmployee, getEmployees, getEmployeeById, updateEmployeeById, deleteEmployeeById } from '../service/employee.service';
 import _ from 'lodash';
 import Department, { DepartmentModel } from '../models/department.model';
-import JwtService from '../utils/JWTService';
+import JwtService from '../utils/JwtService';
 import User from '../models/user.model';
 
 require('dotenv').config();
@@ -22,7 +22,6 @@ export async function getEmployeeHandler(
             where: { username: decode.username }
         })
 
-        console.log("user", user)
         const employees: any = await getEmployees();
 
         const departments: Department[] = await Department.findAll();
@@ -42,7 +41,6 @@ export async function getEmployeeHandler(
 
 
         if (user.departmentId !== 3) {
-            console.log(user.departmentId)
             empObj = empObj.filter((emp: any) => emp.departmentId === user.departmentId);
         }
 

@@ -1,7 +1,12 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model, Optional } from 'sequelize'
 import { sequelize } from '../config/sequelize';
 
-class Department extends Model {
+interface DepartmentAttributes {
+  id: number;
+  name?: string;
+}
+
+class Department extends Model<DepartmentAttributes, DepartmentCreationAttributes> {
   id?: number;
   name!: 'HR' | 'PS' | 'ADMIN';
 }
@@ -21,5 +26,5 @@ Department.init({
 
 
 export default Department;
-
 export type DepartmentModel = typeof Department;
+export interface DepartmentCreationAttributes extends Optional<DepartmentAttributes, 'id'> { }

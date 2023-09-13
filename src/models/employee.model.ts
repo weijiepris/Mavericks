@@ -1,12 +1,20 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from '../config/sequelize';
 
-class Employee extends Model {
-    id?: number;
-    name!: string;
-    salary!: number;
-    departmentId!: number;
+interface EmployeeAttributes {
+    id: number;
+    name: string;
+    salary: number;
+    departmentId: number;
     department?: string;
+}
+
+class Employee extends Model<EmployeeAttributes, EmployeeCreationAttributes> {
+    public id!: number;
+    public name!: string;
+    public salary!: number;
+    public departmentId!: number;
+    public department?: string;
 }
 
 Employee.init({
@@ -23,6 +31,7 @@ Employee.init({
     tableName: 'employee',
     modelName: 'Employee',
 });
-export default Employee;
 
+export default Employee;
 export type EmployeeModel = typeof Employee;
+export interface EmployeeCreationAttributes extends Optional<EmployeeAttributes, 'id'> { }

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { Request, Response, NextFunction } from 'express';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
-import JwtService from '../utils/JWTService';
+import JwtService from '../utils/JwtService';
 import User from '../models/user.model';
 
 const jwtService = new JwtService();

@@ -1,4 +1,4 @@
-import Employee, { EmployeeModel, } from "../models/employee.model";
+import Employee, { EmployeeCreationAttributes, } from "../models/employee.model";
 
 export const getEmployees = async (): Promise<Employee[]> => await Employee.findAll();
 
@@ -6,10 +6,10 @@ export const createEmployee = async (employee: any): Promise<Employee> => Employ
 
 export const getEmployeeById = async (id: number): Promise<Employee | null> => Employee.findByPk(id)
 
-export const updateEmployeeById = async (id: number, employeeModel: EmployeeModel): Promise<Employee> => {
-    const [updatedRowCount, updatedEmployee]: [any, Employee[]] = await Employee.update(employeeModel, {
+export const updateEmployeeById = async (id: number, employeeModel: EmployeeCreationAttributes): Promise<Employee> => {
+    const [, updatedEmployee]: [any, Employee[]] = await Employee.update(employeeModel, {
         where: { id },
-        returning: true, // This returns the updated employee record
+        returning: true,
     });
     return updatedEmployee[0];
 }
