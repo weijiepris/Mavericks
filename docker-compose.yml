@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   sequelize:
-    image: sequelize:0.0.1
     build:
       context: https://github.com/weijiepris/Mavericks-Sequelize-Backend#main
     restart: always
